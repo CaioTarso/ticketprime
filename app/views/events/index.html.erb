@@ -1,0 +1,31 @@
+<p class="notice"><%= notice %></p>
+
+<h1 class="page-title">Eventos disponíveis</h1>
+
+<div class="events-container">
+  <% @events.each do |event| %>
+    <div class="event-card">
+      <% if event.image.attached? %>
+        <%= image_tag event.image, class: "event-image" %>
+      <% else %>
+        <div class="event-placeholder">Sem imagem</div>
+      <% end %>
+
+      <div class="event-info">
+        <h2 class="event-name"><%= event.name %></h2>
+        <p class="event-category"><strong>Categoria:</strong> <%= event.category %></p>
+        <p class="event-date"><strong>Data:</strong> <%= l(event.date, format: :long) %></p>
+        <p class="event-price"><strong>Preço:</strong> R$ <%= number_to_currency(event.price, unit: "", separator: ",", delimiter: ".") %></p>
+        <p class="event-tickets"><strong>Ingressos disponíveis:</strong> <%= event.tickets_available %></p>
+      </div>
+
+      <div class="event-actions">
+        <%= link_to "Ver detalhes", event, class: "btn btn-show" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="new-event-btn">
+  <%= link_to "Criar novo evento", new_event_path, class: "btn btn-new" %>
+</div>

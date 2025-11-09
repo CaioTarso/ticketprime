@@ -1,0 +1,37 @@
+<div id="<%= dom_id event %>">
+
+  <% if event.image.attached? %>
+    <%= image_tag url_for(event.image), width: 200, class: "rounded shadow" %>
+  <% end %>
+
+  <p>
+    <strong>Name:</strong>
+    <%= event.name %>
+  </p>
+
+  <p>
+    <strong>Category:</strong>
+    <%= event.category %>
+  </p>
+
+  <p>
+    <strong>Date:</strong>
+    <%= event.date %>
+  </p>
+
+  <p>
+    <strong>Price:</strong>
+    <%= event.price %>
+  </p>
+
+  <p>
+    <strong>Tickets available:</strong>
+    <%= event.tickets_available %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= event.description %>
+  </p>
+
+</div>

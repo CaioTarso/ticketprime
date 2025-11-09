@@ -1,0 +1,56 @@
+<%= form_with(model: event, local: true, html: { multipart: true, class: "event-form" }) do |form| %>
+  <% if event.errors.any? %>
+    <div class="form-errors">
+      <h2><%= pluralize(event.errors.count, "erro") %> impediram o salvamento:</h2>
+      <ul>
+        <% event.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :image, "Imagem do evento" %>
+    <%= form.file_field :image, class: "form-control" %>
+    <div id="image-preview-container">
+    <img id="image-preview" src="#" alt="Prévia da imagem" style="display:none;"/>
+  </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :name, "Nome" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :category, "Categoria" %>
+    <%= form.text_field :category, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :date, "Data" %>
+    <%= form.datetime_field :date, class: "form-control" %>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <%= form.label :price, "Preço" %>
+      <%= form.text_field :price, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :tickets_available, "Ingressos disponíveis" %>
+      <%= form.number_field :tickets_available, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description, "Descrição" %>
+    <%= form.text_area :description, rows: 4, class: "form-control" %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit "Salvar evento", class: "btn" %>
+  </div>
+<% end %>
