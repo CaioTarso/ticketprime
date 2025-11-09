@@ -1,31 +1,35 @@
-<p class="notice"><%= notice %></p>
+<p class="text-center text-success fw-medium"><%= notice %></p>
 
-<h1 class="page-title">Eventos disponíveis</h1>
+<h1 class=" my-4">Eventos Disponíveis</h1>
 
-<div class="events-container">
+<div class="row row-cols-1 row-cols-md-3 g-4">
   <% @events.each do |event| %>
-    <div class="event-card">
-      <% if event.image.attached? %>
-        <%= image_tag event.image, class: "event-image" %>
-      <% else %>
-        <div class="event-placeholder">Sem imagem</div>
-      <% end %>
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <% if event.image.attached? %>
+          <%= image_tag event.image, class: "card-img-top", style: "height: 180px; object-fit: cover;" %>
+        <% else %>
+          <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height:180px;">
+            Sem imagem
+          </div>
+        <% end %>
 
-      <div class="event-info">
-        <h2 class="event-name"><%= event.name %></h2>
-        <p class="event-category"><strong>Categoria:</strong> <%= event.category %></p>
-        <p class="event-date"><strong>Data:</strong> <%= l(event.date, format: :long) %></p>
-        <p class="event-price"><strong>Preço:</strong> R$ <%= number_to_currency(event.price, unit: "", separator: ",", delimiter: ".") %></p>
-        <p class="event-tickets"><strong>Ingressos disponíveis:</strong> <%= event.tickets_available %></p>
-      </div>
+        <div class="card-body">
+          <h5 class="card-title"><%= event.name %></h5>
+          <p class="card-text mb-1"><strong>Categoria:</strong> <%= event.category %></p>
+          <p class="card-text mb-1"><strong>Data:</strong> <%= l(event.date, format: :long) %></p>
+          <p class="card-text mb-1"><strong>Preço:</strong> R$ <%= number_to_currency(event.price, unit: "", separator: ",", delimiter: ".") %></p>
+          <p class="card-text mb-0"><strong>Ingressos disponíveis:</strong> <%= event.tickets_available %></p>
+        </div>
 
-      <div class="event-actions">
-        <%= link_to "Ver detalhes", event, class: "btn btn-show" %>
+        <div class="card-footer text-center bg-white border-0">
+          <%= link_to "Ver detalhes", event, class: "btn btn-primary btn-sm" %>
+        </div>
       </div>
     </div>
   <% end %>
 </div>
 
-<div class="new-event-btn">
-  <%= link_to "Criar novo evento", new_event_path, class: "btn btn-new" %>
+<div class="my-4">
+  <%= link_to "Criar novo evento", new_event_path, class: "btn btn-success" %>
 </div>
