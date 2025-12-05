@@ -19,6 +19,9 @@
           <!--<li>
             <%= link_to 'Carrinho', class: 'nav-link' %>
           </li>-->
+          <li class="nav-item">
+            <%= link_to 'Editar Perfil', edit_user_registration_path, class: 'nav-link' %>
+          </li>
           <li>
             <%= button_to 'Sair', destroy_user_session_path, method: :delete, class: 'nav-link' %>
           </li>
