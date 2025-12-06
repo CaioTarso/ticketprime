@@ -1,6 +1,7 @@
 class Event < ApplicationRecord
   has_many :tickets, dependent: :restrict_with_error
   has_one_attached :image
+  belongs_to :user
 
   validates :name, :category, :date, :price, :tickets_available, presence: true
   validates :tickets_available, numericality: { greater_than_or_equal_to: 0 }

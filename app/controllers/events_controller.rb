@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy ]
+  before_action :authorize_event_owner!, only: %i[ edit update destroy ]
 
   # GET /events or /events.json
   def index
@@ -21,7 +22,8 @@ class EventsController < ApplicationController
 
   # POST /events or /events.json
   def create
-    @event = Event.new(event_params)
+    @event = current_user.events.build(event_params)
+
 
     respond_to do |format|
       if @event.save
@@ -67,4 +69,11 @@ class EventsController < ApplicationController
     def event_params
       params.require(:event).permit(:name, :category, :date, :price, :tickets_available, :description, :image)
     end
+
+    def authorize_event_owner!
+      unless @event.user == current_user
+        redirect_to events_path, alert: "Você não tem permissão para editar este evento."
+      end
+    end
+
 end
