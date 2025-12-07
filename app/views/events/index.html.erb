@@ -2,6 +2,54 @@
 
 <h3 class=" my-4">Eventos Disponíveis</h3>
 
+<div class="mb-4">
+  <%= form_with url: events_path, method: :get, local: true, class: "d-flex gap-2 align-items-center" do %>
+
+    <%= text_field_tag :q, params[:q], class: "form-control", placeholder: "Busque eventos..." %>
+
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary dropdown-toggle"
+        type="button"
+        id="filterDropdown"
+        data-bs-toggle="dropdown"
+        data-bs-auto-close="outside"
+        aria-expanded="false">
+      Filtros
+      </button>
+
+
+      <ul class="dropdown-menu p-3" aria-labelledby="filterDropdown">
+
+        <li class="form-check mb-2">
+          <%= check_box_tag :mine, "1", params[:mine].present?, class: "form-check-input", id: "mine_check" %>
+          <%= label_tag :mine, "Apenas meus eventos", class: "form-check-label" %>
+        </li>
+
+        <% if @categories.present? %>
+          <li class="mb-2">
+            <label class="form-label">Categoria</label>
+            <%= select_tag :category,
+                options_from_collection_for_select(@categories, :name, :name, params[:category]),
+                prompt: "Todas",
+                class: "form-select" %>
+          </li>
+        <% end %>
+
+        <li>
+          <label class="form-label">Data mínima</label>
+          <%= date_field_tag :from, params[:from], class: "form-control" %>
+        </li>
+
+      </ul>
+    </div>
+
+    <%= submit_tag "Buscar", class: "btn btn-primary" %>
+
+  <% end %>
+</div>
+
+
+
 <div class="row row-cols-1 row-cols-md-3 g-4">
   <% @events.each do |event| %>
     <div class="col">

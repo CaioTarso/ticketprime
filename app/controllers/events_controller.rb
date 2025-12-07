@@ -4,8 +4,23 @@ class EventsController < ApplicationController
 
   # GET /events or /events.json
   def index
-    @events = Event.all
+  @events = Event.all
+
+  if params[:q].present?
+    term = "%#{params[:q]}%"
+    @events = @events.where("name LIKE :t OR description LIKE :t", t: term)
   end
+
+  if params[:mine].present? && user_signed_in?
+    @events = @events.where(user: current_user)
+  end
+
+  @events = @events.order(created_at: :desc)
+end
+
+
+
+
 
   # GET /events/1 or /events/1.json
   def show
