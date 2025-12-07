@@ -49,8 +49,18 @@
     <%= form.label :description, "Descrição" %>
     <%= form.text_area :description, rows: 4, class: "form-control" %>
   </div>
+  
+  
+  <div class="form-actions d-flex gap-3 pt-4">
+    <%= form.submit "Salvar evento", class: "btn btn-success" %>
 
-  <div class="form-actions pt-4">
-    <%= form.submit "Salvar evento", class: "btn btn-success " %>
+    <% if event.persisted? %>
+      <%= link_to event_path(event),
+            data: { turbo_method: :delete, turbo_confirm: "Tem certeza que deseja excluir?" },
+            class: "btn btn-danger" do %>
+        <i class="fa fa-trash"></i> Excluir evento
+      <% end %>
+    <% end %>
   </div>
+
 <% end %>
