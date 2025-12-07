@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <%= link_to 'TicketPrime', root_path, class: 'navbar-brand fw-bold' %>
+    <%= link_to root_path, class: 'navbar-brand fw-bold' do %>
+      <i class="fa fa-ticket"></i> TicketPrime
+            <% end %>
+    
+
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,28 +14,40 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <%= link_to 'Ver Eventos', events_path, class: 'nav-link' %>
+          <%= link_to events_path, class: 'nav-link' do %>
+          <i class="fa fa-home"></i> Ver Eventos
+              <% end %>
         </li>
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to 'Criar Evento', new_event_path, class: 'nav-link' %>
+            <%= link_to new_event_path, class: 'nav-link' do %>
+            <i class="fa fa-plus"></i> Criar evento
+              <% end %>
           </li>
           <!--<li>
             <%= link_to 'Carrinho', class: 'nav-link' %>
           </li>-->
           <li class="nav-item">
-            <%= link_to 'Editar Perfil', edit_user_registration_path, class: 'nav-link' %>
+            <%= link_to  edit_user_registration_path, class: 'nav-link' do %>
+            <i class="fa fa-user"></i> Editar Perfil
+              <% end %>
           </li>
           <li>
-            <%= button_to 'Sair', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+            <%= button_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
+            <i class="fa fa-sign-out"></i> Sair
+              <% end %>
           </li>
         <% else %>
           <li>
-            <%= link_to 'Cadastar', new_user_registration_path, class: 'nav-link' %>
+            <%= link_to new_user_registration_path, class: 'nav-link' do %>
+            <i class="fa fa-user"></i> Cadastar
+              <% end %>
           </li>
 
           <li>
-            <%= link_to 'Entrar', new_user_session_path, class: 'nav-link' %>
+            <%= link_to new_user_session_path, class: 'nav-link' do %>
+              <i class="fa fa-sign-in"></i> Entrar
+              <% end %>
           </li>
         <% end %>
       </ul>
