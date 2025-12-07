@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 ruby "3.0.2"
 
+gem 'font-awesome-less', '~> 4.7.0'
+
 gem "devise"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
