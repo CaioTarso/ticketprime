@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "3.0.2"
 
-gem 'font-awesome-less', '~> 4.7.0'
+gem "font-awesome-rails"
 
 gem "devise"
 
