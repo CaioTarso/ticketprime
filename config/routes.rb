@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     post :add
     delete :remove
     post :checkout
+    post :increase
+    post :decrease
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
