@@ -1,20 +1,63 @@
-<h1>Seu Carrinho</h1>
+<h1 class="mb-4">Seu Carrinho</h1>
 
-<% if @items.any? %>
-  <ul>
-    <% @items.each do |item| %>
-      <li>
-        <%= item.event.name %> —
-        Quantidade: <%= item.quantity %>
-
-        <%= button_to "Remover",
-          remove_cart_path(event_id: item.event.id),
-          method: :delete %>
-      </li>
-    <% end %>
-  </ul>
-
-  <%= button_to "Finalizar Compra", checkout_cart_path, method: :post %>
-<% else %>
+<% if @items.empty? %>
   <p>Seu carrinho está vazio.</p>
+
+<% else %>
+  <% total = 0 %>
+
+  <div class="container">
+    <% @items.each do |item| %>
+      <% event = item.event %>
+      <% subtotal = item.quantity * event.price %>
+      <% total += subtotal %>
+
+      <div class="card shadow-sm mb-4">
+
+        <% if event.image.attached? %>
+          <%= image_tag event.image, class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
+        <% else %>
+          <div class="bg-secondary text-white d-flex align-items-center justify-content-center"
+               style="height: 200px;">
+            Sem imagem
+          </div>
+        <% end %>
+
+        <div class="card-body">
+          <h4 class="card-title"><%= event.name %></h4>
+
+          <p>
+            Preço por ingresso:
+            <strong>R$ <%= number_with_precision(event.price, precision: 2, separator: ",") %></strong><br>
+
+            Quantidade:
+            <strong><%= item.quantity %></strong><br>
+
+            Subtotal:
+            <strong>R$ <%= number_with_precision(subtotal, precision: 2, separator: ",") %></strong>
+          </p>
+
+          <div class="d-flex gap-2">
+            <%= button_to "+", increase_cart_path(event_id: event.id), method: :post,
+                  class: "btn btn-success btn-sm" %>
+
+            <%= button_to "-", decrease_cart_path(event_id: event.id), method: :post,
+                  class: "btn btn-warning btn-sm" %>
+
+            <%= button_to "Remover", remove_cart_path(event_id: event.id), method: :delete,
+                  class: "btn btn-danger btn-sm" %>
+          </div>
+        </div>
+
+      </div>
+    <% end %>
+
+    <h3 class="mt-4">Total:  
+      <strong>R$ <%= number_with_precision(total, precision: 2, separator: ",") %></strong>
+    </h3>
+
+    <%= button_to "Finalizar compra", checkout_cart_path, method: :post,
+          class: "btn btn-primary mt-3" %>
+
+  </div>
 <% end %>
