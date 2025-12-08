@@ -24,9 +24,11 @@
             <i class="fa fa-plus"></i> Criar evento
               <% end %>
           </li>
-          <!--<li>
-            <%= link_to 'Carrinho', class: 'nav-link' %>
-          </li>-->
+          <li>
+            <%= link_to cart_path, class: 'nav-link' do %>
+            <i class="fa fa-cart-arrow-down"></i> Carrinho
+            <% end %>
+          </li>
           <li class="nav-item">
             <%= link_to  edit_user_registration_path, class: 'nav-link' do %>
             <i class="fa fa-user"></i> Editar Perfil

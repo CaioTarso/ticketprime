@@ -1,0 +1,20 @@
+<h1>Seu Carrinho</h1>
+
+<% if @items.any? %>
+  <ul>
+    <% @items.each do |item| %>
+      <li>
+        <%= item.event.name %> —
+        Quantidade: <%= item.quantity %>
+
+        <%= button_to "Remover",
+          remove_cart_path(event_id: item.event.id),
+          method: :delete %>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= button_to "Finalizar Compra", checkout_cart_path, method: :post %>
+<% else %>
+  <p>Seu carrinho está vazio.</p>
+<% end %>
