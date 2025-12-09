@@ -15,45 +15,50 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <%= link_to events_path, class: 'nav-link' do %>
-          <i class="fa fa-home"></i> Ver Eventos
+          <i class="bi bi-house-fill"></i> Ver Eventos
               <% end %>
         </li>
         <% if user_signed_in? %>
           <li class="nav-item">
             <%= link_to new_event_path, class: 'nav-link' do %>
-            <i class="fa fa-plus"></i> Criar evento
+            <i class="bi bi-plus-circle"></i> Criar evento
               <% end %>
           </li>
           <li>
             <%= link_to cart_path, class: 'nav-link' do %>
-            <i class="fa fa-cart-arrow-down"></i> Carrinho
+            <i class="bi bi-cart-fill"></i> Carrinho
             <% end %>
           </li>
           <li>
             <%= link_to orders_path, class: 'nav-link' do %>
-            <i class="fa fa-ticket"></i>Meus Ingressos
+            <i class="bi bi-ticket-fill"></i> Meus Ingressos
+            <% end %>
+          </li>
+          <li>
+            <%= link_to dashboard_path, class: "nav-link" do %>
+            <i class="bi bi-bar-chart-fill"></i> Dashboard
             <% end %>
           </li>
           <li class="nav-item">
             <%= link_to  edit_user_registration_path, class: 'nav-link' do %>
-            <i class="fa fa-user"></i> Editar Perfil
+            <i class="bi bi-person-circle"></i> Editar Perfil
               <% end %>
           </li>
           <li>
             <%= button_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
-            <i class="fa fa-sign-out"></i> Sair
+            <i class="bi bi-box-arrow-right"></i> Sair
               <% end %>
           </li>
         <% else %>
           <li>
             <%= link_to new_user_registration_path, class: 'nav-link' do %>
-            <i class="fa fa-user"></i> Cadastar
+            <i class="bi bi-person-add"></i> Cadastar
               <% end %>
           </li>
 
           <li>
             <%= link_to new_user_session_path, class: 'nav-link' do %>
-              <i class="fa fa-sign-in"></i> Entrar
+              <i class="bi bi-box-arrow-in-left"></i> Entrar
               <% end %>
           </li>
         <% end %>
