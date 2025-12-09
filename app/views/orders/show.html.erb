@@ -1,22 +1,35 @@
-<h1 class="mb-4">Detalhes da Compra</h1>
+<h1 class="mb-4">Ingressos da Compra</h1>
 
 <% @order.order_items.each do |item| %>
-  <div class="card shadow-sm p-4 mb-4">
+  <% code = item.qr_code.to_s.presence || "NO-CODE-#{item.id}" %>
+  <% qr = RQRCode::QRCode.new(code) %>
 
-    <div class="row">
-      <!-- Informações -->
-      <div class="col-md-8">
-        <h3 class="mb-2"><%= item.event.name %></h3>
+  <div class="ticket mb-5">
 
-        <p class="text-muted mb-3">
-          <strong>Quantidade:</strong> <%= item.quantity %> <br>
-          <strong>Preço unitário:</strong> R$ <%= number_with_precision(item.price, precision: 2) %>
+    <% if item.event.image.attached? %>
+      <div class="ticket-header">
+        <%= image_tag item.event.image, class: "ticket-image" %>
+      </div>
+    <% end %>
+
+    <div class="ticket-body row g-0">
+
+      <div class="col-md-8 p-4">
+        <h2 class="ticket-title"><%= item.event.name %></h2>
+
+        <p class="ticket-info">
+          <strong>Quantidade:</strong> <%= item.quantity %><br>
+          <strong>Preço unitário:</strong> R$ <%= number_with_precision(item.price, precision: 2) %><br>
+          <strong>Data da compra:</strong> <%= item.order.created_at.strftime("%d/%m/%Y %H:%M") %>
         </p>
 
-        <% code = item.qr_code.to_s.presence || "NO-CODE-#{item.id}" %>
-        <% qr = RQRCode::QRCode.new(code) %>
+        <div class="ticket-code">
+          <span><%= item.qr_code %></span>
+        </div>
+      </div>
 
-        <div class="text-center my-3">
+      <div class="col-md-4 text-center p-4 ticket-qr">
+        <div class="qr-wrapper">
           <%= raw qr.as_svg(
             offset: 0,
             color: '000',
@@ -25,28 +38,13 @@
             standalone: true
           ) %>
         </div>
-
-        <p class="text-center mt-2">
-          <strong>Código do ingresso:</strong><br>
-          <span class="badge bg-dark"><%= item.qr_code %></span>
-        </p>
+        <p class="mt-3 text-muted">Apresente este código na entrada</p>
       </div>
 
-      <!-- Imagem do evento -->
-      <div class="col-md-4 d-flex align-items-center justify-content-center">
-        <% if item.event.image.attached? %>
-          <%= image_tag item.event.image, class: "img-fluid rounded shadow-sm border", style: "max-height: 250px; object-fit: cover;" %>
-        <% else %>
-          <div class="text-muted text-center">
-            <em>Sem imagem do evento</em>
-          </div>
-        <% end %>
-      </div>
     </div>
-
   </div>
 <% end %>
 
-<div class="alert alert-success text-end fs-5 mt-4">
+<div class="alert alert-dark text-end fs-4">
   <strong>Total pago:</strong> R$ <%= number_with_precision(@order.total, precision: 2) %>
 </div>

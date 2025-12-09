@@ -14,3 +14,82 @@
  *= require_self
  *= require font-awesome
  */
+.ticket {
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.ticket:before,
+.ticket:after {
+  content: "";
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.ticket:before {
+  left: -18px;
+}
+
+.ticket:after {
+  right: -18px;
+}
+
+/* Cabeçalho com imagem */
+.ticket-header {
+  width: 100%;
+  overflow: hidden;
+  height: 180px;
+}
+
+.ticket-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ticket-body {
+  position: relative;
+}
+
+/* Informações */
+.ticket-title {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.ticket-info {
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.ticket-code {
+  margin-top: 20px;
+  padding: 10px 18px;
+  display: inline-block;
+  border: 1px dashed #888;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  background: #f8f8f8;
+}
+
+.ticket-qr {
+  border-left: 2px dashed #ccc;
+}
+
+.qr-wrapper svg {
+  max-width: 140px;
+  margin: auto;
+}
