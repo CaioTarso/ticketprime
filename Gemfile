@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 ruby "3.0.2"
 
+gem "rqrcode"
+
 gem "font-awesome-rails"
 
 gem "devise"
