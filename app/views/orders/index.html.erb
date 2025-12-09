@@ -1,0 +1,21 @@
+<h1>Minhas Compras</h1>
+
+<% @orders.each do |order| %>
+  <div class="card mb-4 p-3">
+    <h4>Compra feita <%= order.created_at.strftime("%d/%m/%Y") %></h4> 
+
+    <ul>
+      <% order.order_items.each do |item| %>
+        <li>
+          <strong><%= item.event.name %></strong> — 
+          <%= item.quantity %> ingresso(s)  
+          (R$ <%= number_with_precision(item.price, precision: 2) %>)
+        </li>
+      <% end %>
+    </ul>
+
+    Total: R$ <%= number_with_precision(order.total, precision: 2) %>
+
+    <%= link_to "Ver detalhes", order_path(order), class: "btn btn-primary mt-2" %>
+  </div>
+<% end %>

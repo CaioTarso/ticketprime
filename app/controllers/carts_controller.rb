@@ -54,10 +54,33 @@ class CartsController < ApplicationController
   end
 
   def checkout
-    cart = current_user.cart
-    cart.cart_items.destroy_all # no próximo passo salvaremos como Purchase
-    redirect_to root_path, notice: "Compra finalizada!"
+  cart = current_user.cart
+  cart_items = cart.cart_items.includes(:event)
+
+  order = nil   
+
+  ActiveRecord::Base.transaction do
+    order = current_user.orders.create!
+
+    cart_items.each do |item|
+      OrderItem.create!(
+        order: order,
+        event: item.event,
+        quantity: item.quantity,
+        price: item.event.price
+      )
+
+      item.event.update!(tickets_available: item.event.tickets_available - item.quantity)
+    end
+
+    cart.cart_items.destroy_all
   end
+
+  redirect_to order_path(order), notice: "Compra realizada com sucesso!"
+end
+
+
+
 
   def set_cart
     @cart = current_user.cart || current_user.create_cart! 

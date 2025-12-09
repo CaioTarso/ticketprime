@@ -1,0 +1,20 @@
+<h1>Detalhes do Pedido #<%= @order.id %></h1>
+
+<% @order.order_items.each do |item| %>
+  <div class="card p-3 mb-3">
+    <h4><%= item.event.name %></h4>
+    <p>
+      Quantidade: <%= item.quantity %><br>
+      Preço unitário: R$ <%= number_with_precision(item.price, precision: 2) %>
+    </p>
+
+    <% if item.event.image.attached? %>
+      <%= image_tag item.event.image, style: "height: 200px; object-fit: cover;" %>
+    <% end %>
+  </div>
+<% end %>
+
+<p>
+  Total pago:  
+  <strong>R$ <%= number_with_precision(@order.total, precision: 2) %></strong>
+</p>

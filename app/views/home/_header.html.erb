@@ -29,6 +29,11 @@
             <i class="fa fa-cart-arrow-down"></i> Carrinho
             <% end %>
           </li>
+          <li>
+            <%= link_to orders_path, class: 'nav-link' do %>
+            <i class="fa fa-ticket"></i>Meus Ingressos
+            <% end %>
+          </li>
           <li class="nav-item">
             <%= link_to  edit_user_registration_path, class: 'nav-link' do %>
             <i class="fa fa-user"></i> Editar Perfil
