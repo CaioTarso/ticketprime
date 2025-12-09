@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  get 'dashboard/index'
   get 'orders/index'
   get 'orders/show'
+  get "dashboard", to: "dashboard#index"
   devise_for :users
   root "events#index"
 
@@ -15,6 +17,8 @@ Rails.application.routes.draw do
   end
 
   resources :orders, only: [:index, :show]
+
+  
 
 
   get "up" => "rails/health#show", as: :rails_health_check
