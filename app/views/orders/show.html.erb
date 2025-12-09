@@ -20,7 +20,7 @@
         <p class="ticket-info">
           <strong>Quantidade:</strong> <%= item.quantity %><br>
           <strong>Preço unitário:</strong> R$ <%= number_with_precision(item.price, precision: 2) %><br>
-          <strong>Data da compra:</strong> <%= item.order.created_at.strftime("%d/%m/%Y %H:%M") %>
+          <strong>Data da compra:</strong> <%= item.order.created_at.in_time_zone('America/Fortaleza').strftime("%d/%m/%Y %H:%M") %>
         </p>
 
         <div class="ticket-code">
