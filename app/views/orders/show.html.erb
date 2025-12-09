@@ -1,20 +1,52 @@
-<h1>Detalhes do Pedido</h1>
+<h1 class="mb-4">Detalhes da Compra</h1>
 
 <% @order.order_items.each do |item| %>
-  <div class="card p-3 mb-3">
-    <h4><%= item.event.name %></h4>
-    <p>
-      Quantidade: <%= item.quantity %><br>
-      Preço unitário: R$ <%= number_with_precision(item.price, precision: 2) %>
-    </p>
+  <div class="card shadow-sm p-4 mb-4">
 
-    <% if item.event.image.attached? %>
-      <%= image_tag item.event.image, style: "height: 200px; object-fit: cover;" %>
-    <% end %>
+    <div class="row">
+      <!-- Informações -->
+      <div class="col-md-8">
+        <h3 class="mb-2"><%= item.event.name %></h3>
+
+        <p class="text-muted mb-3">
+          <strong>Quantidade:</strong> <%= item.quantity %> <br>
+          <strong>Preço unitário:</strong> R$ <%= number_with_precision(item.price, precision: 2) %>
+        </p>
+
+        <% code = item.qr_code.to_s.presence || "NO-CODE-#{item.id}" %>
+        <% qr = RQRCode::QRCode.new(code) %>
+
+        <div class="text-center my-3">
+          <%= raw qr.as_svg(
+            offset: 0,
+            color: '000',
+            shape_rendering: 'crispEdges',
+            module_size: 6,
+            standalone: true
+          ) %>
+        </div>
+
+        <p class="text-center mt-2">
+          <strong>Código do ingresso:</strong><br>
+          <span class="badge bg-dark"><%= item.qr_code %></span>
+        </p>
+      </div>
+
+      <!-- Imagem do evento -->
+      <div class="col-md-4 d-flex align-items-center justify-content-center">
+        <% if item.event.image.attached? %>
+          <%= image_tag item.event.image, class: "img-fluid rounded shadow-sm border", style: "max-height: 250px; object-fit: cover;" %>
+        <% else %>
+          <div class="text-muted text-center">
+            <em>Sem imagem do evento</em>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
   </div>
 <% end %>
 
-<p>
-  Total pago:  
-  <strong>R$ <%= number_with_precision(@order.total, precision: 2) %></strong>
-</p>
+<div class="alert alert-success text-end fs-5 mt-4">
+  <strong>Total pago:</strong> R$ <%= number_with_precision(@order.total, precision: 2) %>
+</div>
