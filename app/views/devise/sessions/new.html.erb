@@ -1,6 +1,6 @@
 <div class="card">
       <div class="card-header">
-        <h4>Log in</h4>
+        <h4>Login</h4>
       </div>
       <div class="card-body">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -21,13 +21,14 @@
             </div>
           <% end %>
 
-          <div class="actions">
+          <div class="actions pb-4">
             <%= f.submit "Log in", class: "btn btn-secondary" %>
           </div>
+          <%= render "devise/shared/links" %>
         <% end %>
       </div>
   </div>
 
 
 
-<%= render "devise/shared/links" %>
+
