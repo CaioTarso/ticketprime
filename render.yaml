@@ -1,0 +1,17 @@
+# Arquivo: render.yaml
+
+services:
+  - type: web
+    name: ticketprime  
+    env: ruby
+    plan: starter      
+   
+
+  
+    buildCommand: "bundle install && bundle exec rake assets:precompile && bundle exec rails db:migrate"
+    
+    startCommand: "bundle exec rails server -p $PORT -e production"
+
+    envVars:
+      - key: PORT
+        value: "10000" 
