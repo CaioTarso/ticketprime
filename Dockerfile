@@ -41,7 +41,7 @@ RUN useradd rails --create-home --shell /bin/bash && \
 
 USER rails:rails
 
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+ENTRYPOINT []
 
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
