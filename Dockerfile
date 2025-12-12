@@ -14,7 +14,7 @@ FROM base as build
 
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
-      build-essential git libvips pkg-config libpq-dev
+      build-essential git libvips pkg-config libpq-dev nodejs npm yarn
 
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
@@ -33,9 +33,11 @@ RUN apt-get update -qq && \
       curl libvips libpq5 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Copia as gems e o código (incluindo os assets compilados)
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
+# Integração do Entrypoint (para rodar db:migrate)
 COPY bin/docker-entrypoint /rails/bin/docker-entrypoint
 RUN chmod +x /rails/bin/docker-entrypoint
 
@@ -44,6 +46,7 @@ RUN useradd rails --create-home --shell /bin/bash && \
 
 USER rails:rails
 
+# Define o script Entrypoint que executa db:migrate antes de iniciar o servidor
 ENTRYPOINT ["/rails/bin/docker-entrypoint"] 
 
 EXPOSE 3000
