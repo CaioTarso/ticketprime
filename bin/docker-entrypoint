@@ -1,8 +1,12 @@
 #!/bin/bash
 set -e
 
-echo "Running entrypoint..."
+# 1. Remove o lock do servidor (evita erro de 'servidor já está rodando')
+rm -f tmp/pids/server.pid
 
-bundle exec rails db:prepare
+# 2. Roda as migrações (Passo CRÍTICO que faltava)
+echo "Rodando migrações do banco de dados..."
+bundle exec rails db:migrate
 
+# 3. Executa o comando principal (inicia o servidor Rails)
 exec "$@"

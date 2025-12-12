@@ -33,12 +33,19 @@ RUN apt-get update -qq && \
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
+
+COPY bin/docker-entrypoint /rails/bin/docker-entrypoint
+
+RUN chmod +x /rails/bin/docker-entrypoint
+
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
 
 USER rails:rails
 
-ENTRYPOINT []
+
+ENTRYPOINT ["/rails/bin/docker-entrypoint"] 
 
 EXPOSE 3000
+
 CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
