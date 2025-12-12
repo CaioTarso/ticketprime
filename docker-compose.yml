@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: ticketprime_app
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ticketprime_development
+      SECRET_KEY_BASE: your_local_secret_key
+    volumes:
+      - .:/rails
+    command: ./bin/rails server -b 0.0.0.0
+
+  db:
+    image: postgres:15
+    container_name: ticketprime_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ticketprime_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

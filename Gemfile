@@ -1,6 +1,5 @@
 source "https://rubygems.org"
 
-ruby "3.3.5"
 
 gem "rqrcode"
 
@@ -13,6 +12,8 @@ gem "rails", "~> 7.1.6"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
+
+gem "pg", "~> 1.5"
 
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 1.4"
