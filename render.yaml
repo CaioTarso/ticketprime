@@ -1,17 +1,30 @@
-# Arquivo: render.yaml
-
 services:
   - type: web
     name: ticketprime  
     env: ruby
-    plan: starter      
+    plan: starter
+    
    
-
-  
     buildCommand: "bundle install && bundle exec rake assets:precompile && bundle exec rails db:migrate"
     
+    
     startCommand: "bundle exec rails server -p $PORT -e production"
-
+    
     envVars:
-      - key: PORT
-        value: "10000" 
+      - key: RAILS_ENV
+        value: production
+      
+     
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ticket-prime-db 
+          property: connectionString
+      
+      
+
+
+
+databases:
+  - name: ticket-prime-db      
+    databaseName: ticket_prime_db 
+    user: ticket_prime_db_user    
