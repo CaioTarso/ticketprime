@@ -23,7 +23,7 @@ RUN bundle install && \
 COPY . .
 
 
-RUN bundle exec rails assets:precompile
+RUN SECRET_KEY_BASE_DUMMY=placeholder bundle exec rails assets:precompile
 
 
 FROM base
@@ -51,4 +51,5 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 EXPOSE 3000
 
+# CMD é o servidor que o Entrypoint executa no final
 CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
