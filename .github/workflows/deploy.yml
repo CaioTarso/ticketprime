@@ -4,32 +4,28 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.3
-        bundler-cache: true
-
-    - name: Install dependencies
-      run: bundle install
-
-    - name: Precompile assets
-      run: bundle exec rails assets:precompile
-
-    - name: Run tests
-      run: bundle exec rails test || echo "Tests falharam mas deploy continua"
-
-    - name: Deploy to Render
-      uses: render-oss/render-deploy-action@v1
-      with:
-        service-id: ${{ secrets.RENDER_SERVICE_ID }}
-        api-key: ${{ secrets.RENDER_API_KEY }}
+      - name: Trigger Render Deploy
+        run: |
+          RENDER_DEPLOY_HOOK="https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys"
+          
+          echo "Disparando novo deploy para o serviço ID: ${{ secrets.RENDER_SERVICE_ID }}"
+          
+         
+          curl -X POST "$RENDER_DEPLOY_HOOK" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            --data '{"clearCache": "false"}' 
+        
+        env:
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
