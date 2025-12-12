@@ -15,6 +15,6 @@ test:
   <<: *default
   database: ticketprime_test
 
-pproduction:
+production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>

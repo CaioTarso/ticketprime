@@ -23,7 +23,7 @@ RUN bundle install && \
 COPY . .
 
 
-RUN SECRET_KEY_BASE_DUMMY=placeholder bundle exec rails assets:precompile
+RUN SECRET_KEY_BASE_DUMMY=placeholder bundle exec rails assets:precompile DISABLE_DATABASE_ENVIRONMENT_CHECK=1
 
 
 FROM base
